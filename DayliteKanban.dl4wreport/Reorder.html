@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+{{fscript
+
+	fieldKey := '_DB_PRIO_'.
+
+	movedTicketId := 0.
+	movedBeforeId := 0.
+	movedAfterId  := 0.
+
+    [ movedTicketOpp := movedTicketType  ] onException:[:exception| movedTicketOpp := '0' ].
+    [ movedTicketId := movedTicket intValue ] onException:[:exception| movedTicketId := 0 ].
+	[ movedBeforeId := movedBefore intValue ] onException:[:exception| movedBeforeId := 0 ].
+    [ movedAfterId  := movedAfter  intValue ] onException:[:exception| movedAfterId  := 0 ].
+
+
+	oppKeys := { 'extra1'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra1,
+			 	 'extra2'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra2,
+			 	 'extra3'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra3,
+			 	 'extra4'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra4,
+			 	 'extra5'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra5,
+			 	 'extra6'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra6,
+			 	 'extra7'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra7,
+			 	 'extra8'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra8,
+			 	 'extra9'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra9,
+			 	 'extra10' -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra10,
+			 	 'extra11' -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra11,
+			 	 'extra12' -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra12 }.
+
+ 	projKeys := { 'extra1'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra1,
+ 			 	  'extra2'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra2,
+ 			 	  'extra3'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra3,
+ 			 	  'extra4'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra4,
+ 			 	  'extra5'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra5,
+ 			 	  'extra6'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra6,
+ 			 	  'extra7'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra7,
+			 	  'extra8'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra8,
+ 			 	  'extra9'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra9,
+ 			 	  'extra10' -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra10,
+			 	  'extra11' -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra11,
+ 			 	  'extra12' -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra12 }.
+
+
+"Need to make sure that there is a custom field set up for opps and projs"
+
+    projPrioKey := nil.
+	"First look for the key.."
+	projKeys do:[:key |
+		(key value) = fieldKey ifTrue:
+		[
+			projPrioKey := (key key).
+		].
+	].
+	projPrioKey == nil ifTrue:[
+		"Doesn't exist, we need to make it.."
+
+		"First find the first available key"
+
+		x:= 1.
+		projKeys do:[:key |
+			searchString := 'Extra Field ' ++ x stringValue.
+			(key value) = searchString ifTrue:
+			[
+				projPrioKey := (key key).
+			].
+			x := x + 1.
+		].
+	    projPrioKey = 'extra1'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra1:fieldKey ].
+	    projPrioKey = 'extra2'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra2:fieldKey ].
+	    projPrioKey = 'extra3'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra3:fieldKey ].
+	    projPrioKey = 'extra4'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra4:fieldKey ].
+	    projPrioKey = 'extra5'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra5:fieldKey ].
+	    projPrioKey = 'extra6'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra6:fieldKey ].
+	    projPrioKey = 'extra7'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra7:fieldKey ].
+	    projPrioKey = 'extra8'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra8:fieldKey ].
+	    projPrioKey = 'extra9'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra9:fieldKey ].
+	    projPrioKey = 'extra10'  ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') setExtra10:fieldKey ].
+	    projPrioKey = 'extra11'  ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') setExtra11:fieldKey ].
+	    projPrioKey = 'extra12'  ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') setExtra12:fieldKey ].
+
+	].
+
+
+
+    oppPrioKey := nil.
+	"First look for the key.."
+	oppKeys do:[:key |
+		(key value) = fieldKey ifTrue:
+		[
+			oppPrioKey := (key key).
+		].
+	].
+	oppPrioKey == nil ifTrue:[
+		"Doesn't exist, we need to make it.."
+
+		"First find the first available key"
+
+		x:= 1.
+		oppKeys do:[:key |
+			searchString := 'Extra Field ' ++ x stringValue.
+			(key value) = searchString ifTrue:
+			[
+				oppPrioKey := (key key).
+			].
+			x := x + 1.
+		].
+	    oppPrioKey = 'extra1'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra1:fieldKey ].
+	    oppPrioKey = 'extra2'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra2:fieldKey ].
+	    oppPrioKey = 'extra3'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra3:fieldKey ].
+	    oppPrioKey = 'extra4'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra4:fieldKey ].
+	    oppPrioKey = 'extra5'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra5:fieldKey ].
+	    oppPrioKey = 'extra6'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra6:fieldKey ].
+	    oppPrioKey = 'extra7'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra7:fieldKey ].
+	    oppPrioKey = 'extra8'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra8:fieldKey ].
+	    oppPrioKey = 'extra9'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra9:fieldKey ].
+	    oppPrioKey = 'extra10'  ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') setExtra10:fieldKey ].
+	    oppPrioKey = 'extra11'  ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') setExtra11:fieldKey ].
+	    oppPrioKey = 'extra12'  ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') setExtra12:fieldKey ].
+	].
+
+
+
+
+
+"At this point both projPrioKey and oppPrioKey point to the correct field used for prioritisations.."
+
+    getPrio := [:opp :type |
+        type = 'Opportunity' ifTrue:
+        [
+            getPrioSub value:opp value:oppPrioKey.
+        ]
+        ifFalse:
+        [
+            getPrioSub value:opp value:projPrioKey.
+        ]
+    ].
+
+	getPrioSub := [:opp :field |
+	    field = 'extra1'  ifTrue: [ opp extra1  intValue. ].
+	    field = 'extra2'  ifTrue: [ opp extra2  intValue. ].
+	    field = 'extra3'  ifTrue: [ opp extra3  intValue. ].
+	    field = 'extra4'  ifTrue: [ opp extra4  intValue. ].
+	    field = 'extra5'  ifTrue: [ opp extra5  intValue. ].
+	    field = 'extra6'  ifTrue: [ opp extra6  intValue. ].
+	    field = 'extra7'  ifTrue: [ opp extra7  intValue. ].
+	    field = 'extra8'  ifTrue: [ opp extra8  intValue. ].
+	    field = 'extra9'  ifTrue: [ opp extra9  intValue. ].
+	    field = 'extra10' ifTrue: [ opp extra10 intValue. ].
+	    field = 'extra11' ifTrue: [ opp extra11 intValue. ].
+	    field = 'extra12' ifTrue: [ opp extra12 intValue. ].
+	].
+
+    setPrio := [:opp :type :val |
+        type = 'Opportunity' ifTrue:
+        [
+            setPrioSub value:opp value:oppPrioKey value:(val stringValue).
+        ]
+        ifFalse:
+        [
+            setPrioSub value:opp value:projPrioKey value:(val stringValue).
+        ]
+    ].
+
+	setPrioSub := [:opp :field :val |
+	    field = 'extra1'  ifTrue: [ opp setExtra1: val. ].
+	    field = 'extra2'  ifTrue: [ opp setExtra2: val. ].
+	    field = 'extra3'  ifTrue: [ opp setExtra3: val. ].
+	    field = 'extra4'  ifTrue: [ opp setExtra4: val. ].
+	    field = 'extra5'  ifTrue: [ opp setExtra5: val. ].
+	    field = 'extra6'  ifTrue: [ opp setExtra6: val. ].
+	    field = 'extra7'  ifTrue: [ opp setExtra7: val. ].
+	    field = 'extra8'  ifTrue: [ opp setExtra8: val. ].
+	    field = 'extra9'  ifTrue: [ opp setExtra9: val. ].
+	    field = 'extra10' ifTrue: [ opp setExtra10: val. ].
+	    field = 'extra11' ifTrue: [ opp setExtra11: val. ].
+	    field = 'extra12' ifTrue: [ opp setExtra12: val. ].
+	].
+
+
+	"movedTicketId := 88033.
+	movedBeforeId := 95014.
+	movedAfterId  := 97014."
+
+	movedTicketId ~~ 0 ifTrue:
+	[
+		moveOpps := objectContext objectsForEntityNamed:'Opportunity'
+        	qualifierLocum:'opportunityID == $movedTicket'
+         	bindings:#{'movedTicket' -> (movedTicketId)}.
+		moveOpp := moveOpps lastObject.
+		allOpps := objectContext objectsForEntityNamed:'Opportunity'
+        	qualifierLocum:'opportunityStateType == 0'
+         	bindings:nil.
+		moveType := 'Opportunity'.
+
+		setPrio value:moveOpp value:moveType value:0.
+
+		movedTicketOpp = '1' ifTrue:
+		[
+				moveOpps := objectContext objectsForEntityNamed:'Project'
+        			qualifierLocum:'projectID == $movedTicket'
+         			bindings:#{'movedTicket' -> (movedTicketId)}.
+				moveOpp := moveOpps lastObject.
+				allOpps := objectContext objectsForEntityNamed:'Project'
+	        		qualifierLocum:'statusCode == 0 or statusCode == 4'
+	         		bindings:nil.
+				moveType := 'Project'.
+		].
+
+		objects := {}.
+		moveOpp == nil ifFalse:
+		[
+
+			pipelineStage := (moveOpp currentPipelineStage) name.
+			movePrio := (moveOpp level) intValue.
+
+			movePrio > 7 ifTrue:
+			[
+				oppGroup := (allOpps where:( (allOpps currentPipelineStage name = pipelineStage) & ( allOpps level intValue > 7 )  ) ).
+			]
+			ifFalse:
+			[
+				oppGroup := (allOpps where:( (allOpps currentPipelineStage name = pipelineStage) & ( allOpps level intValue < 8 )  ) ).
+
+				"movePrio > 4 ifTrue:
+				[
+					oppGroup := (allOpps where:( (allOpps currentPipelineStage name = pipelineStage) & ( allOpps level intValue > 4 ) & ( allOpps level intValue < 8 )  ) ).
+				]
+				ifFalse:
+				[
+					oppGroup := (allOpps where:( (allOpps currentPipelineStage name = pipelineStage) & ( allOpps level intValue < 5 ) ) ).
+				]."
+			].
+
+			prios := {}.
+
+			"First make sure that all opps in oppGroup have a prio value"
+			oppGroup do:[:opp |
+			    p := getPrio value:opp value:moveType.
+				p == nil ifTrue:
+				[
+					"no priority, give it a default of zero..."
+					p := 0.
+					setPrio value:opp value:moveType value:p.
+				].
+				prios add:p.
+			].
+
+			"Sort on prio value"
+			oppGroup := oppGroup at:(prios sort).
+
+			"Move the note.."
+
+			"Remove moveOpp from list"
+			movePos := oppGroup ! moveOpp.
+		    [ oppGroup removeAt:movePos ] onException:[:exception| dummy := 0. ].
+
+			movedBeforeId = 0 ifTrue:
+			[
+				"If 'after' is 0, then we put it at the start of the list"
+
+				oppGroup insert:moveOpp at:0.
+			]
+			ifFalse:
+			[
+				movedAfterId = 0 ifTrue:
+				[
+					"If 'after' is non-zero but 'before' is 0 then it goes to the end of the list "
+
+					oppGroup add:moveOpp.
+				]
+				ifFalse:
+				[
+					"Before and after are non-zero, we try to put it in the middle of them"
+
+					after  := (oppGroup  where:(oppGroup primaryKeyValue = movedAfterId  ) ) lastObject.
+					before := (oppGroup  where:(oppGroup primaryKeyValue = movedBeforeId ) ) lastObject.
+					afterPos  := oppGroup ! after.
+					beforePos := oppGroup ! before.
+					middle := ((afterPos + beforePos) / 2) floor + 1.
+					oppGroup insert:moveOpp at:middle.
+
+				].
+			].
+
+			"Go through and assign prio numbers in order..."
+			counter := 1.
+			oppGroup do:[:opp |
+				setPrio value:opp value:moveType value:counter.
+				counter := counter + 1.
+			].
+		].
+	].
+
+}}
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body width="100%">
+</body>
+</html>

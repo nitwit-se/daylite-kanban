@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+{{fscript
+    [ ticketType    := type    ] onException:[:exception| ticketType    := '' ].
+    [ ticketID      := id      ] onException:[:exception| ticketID      := '' ].
+    [ ticketDetails := details ] onException:[:exception| ticketDetails := '' ].
+    [ ticketTotal   := total   ] onException:[:exception| ticketTotal   := '' ].
+
+    [ ticketMakeDone        := makeDone        ] onException:[:exception| ticketMakeDone        := '' ].
+    [ ticketMakeWon         := makeWon         ] onException:[:exception| ticketMakeWon         := '' ].
+    [ ticketMakeLost        := makeLost        ] onException:[:exception| ticketMakeLost        := '' ].
+    [ ticketLeveransdatum   := leveransdatum   ] onException:[:exception| ticketLeveransdatum   := '' ].
+
+    ticketType = 'Project' ifTrue:
+    [
+        ticket := objectContext objectForEntityNamed:ticketType wherePrimaryKeyValueIs:ticketID.
+        ticket == nil ifFalse:
+        [
+            ticket setDetails: ticketDetails.
+            ticket setExtra11: ticketTotal.
+
+            ticketLeveransdatum == '' ifTrue:
+            [
+                ticket setExtraDate1: nil.
+            ].
+            ticketLeveransdatum == '' ifFalse:
+            [
+                ticket setExtraDate1: ticketLeveransdatum asDate.
+            ].
+
+
+            ticketMakeDone == '' ifFalse:
+            [
+                ticket setStatusCode: 7.  "Done"
+            ].
+        ].
+    ].
+
+    ticketType = 'Opportunity' ifTrue:
+    [
+        ticket := objectContext objectForEntityNamed:ticketType wherePrimaryKeyValueIs:ticketID.
+        ticket == nil ifFalse:
+        [
+            " we can't set any total for opportunities since that comes from summing the estimates "
+            ticket setDetails: ticketDetails.
+
+            ticketLeveransdatum == '' ifTrue:
+            [
+                ticket setExtraDate1: nil.
+            ].
+            ticketLeveransdatum == '' ifFalse:
+            [
+                ticket setExtraDate1: ticketLeveransdatum asDate.
+            ].
+
+
+            ticketMakeWon == '' ifFalse:
+            [
+                ticket setOpportunityStateType: 1.  "Won"
+            ].
+            ticketMakeLost == '' ifFalse:
+            [
+                ticket setOpportunityStateType: 4.  "Lost"
+            ].
+        ].
+    ].
+
+}}
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body width="100%">
+</body>
+</html>

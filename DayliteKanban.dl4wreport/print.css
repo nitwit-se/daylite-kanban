@@ -1,0 +1,108 @@
+
+body {
+    font: 300 300% "Helvetica Neue", Helvetica, sans-serif;
+    padding: 20.0px;
+}
+
+.p { font-size:52pt; }
+
+.task {
+    display: inline-block;
+    min-width: 430px;
+    overflow: hidden;
+}
+
+.taskheader {
+    min-height: 36px;
+    padding: 2px;
+	padding-left: 3px;
+    background-color: rgba(0, 0, 0, 0.05); /* #EFE5DE;*/
+    
+    border-top-left-radius: 4px; /* Opera, Chrome */
+    -moz-border-top-left-radius: 4px; /* FF */
+    border-top-right-radius: 4px; /* Opera, Chrome */
+    -moz-border-top-right-radius: 4px; /* FF */
+    /*font-size: 10pt;
+    font-weight: bold;*/
+	white-space:nowrap;
+	font-size:22px;
+	font-weight:500;
+}
+
+.taskbody {
+    min-height: 100px;
+    padding: 2px;
+    font-size: 52pt;
+    white-space:pre-wrap;
+    word-wrap:break-word;
+    
+}
+
+.taskowner {
+    padding: 1px;
+    width: 428px;
+    height: 32px;
+    text-align: right;
+    bottom: 0px;
+    vertical-align: bottom;
+    font-weight: bold;
+	
+}
+
+.opportunity {
+	font-size:36pt; 
+    min-height: 100px;
+    min-width: 430px;
+    width: 430px;
+    max-width: 435px;
+    padding: 4px;
+    background-color: #B6D7F2;  /* was 86BCEA, 4 steps lighter = B6D7F2  */
+	border-radius: 2px; /* Opera, Chrome */
+    -moz-border-radius: 2px; /* FF */
+	
+    margin-top: 8px;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 8px;
+	word-wrap:break-word;
+	overflow:hidden; 		
+}
+
+
+
+/* define margin below first table */
+.drag {
+	margin: auto;
+	margin-bottom: 5px;
+	margin-top: 2px;
+	margin-left: 2px;
+	margin-right: 2px;
+	padding: 0px;
+	/*text-align: center;*/
+	vertical-align: top;
+    min-height: 240px;
+	max-width: 385px;
+	/*width: 125px;*/
+	font-size: 52pt;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #BFB5AD;
+	background-color: #FFF5EE;
+	
+	/* round corners */
+	border-radius: 4px; /* Opera, Chrome */
+	-moz-border-radius: 4px; /* FF */
+	
+	
+}
+
+
+.projColor { background-color: #ADCDE9;	 } 
+
+.oppColor { background-color: #D2DDB2;	 } 
+
+.info-icon {
+	display:none;
+    opacity: 0.0;
+}
+

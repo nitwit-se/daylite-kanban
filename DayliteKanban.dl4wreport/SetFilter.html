@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+{{fscript
+
+    pipelineFilterKey := 'com.dayban.pipelineFilter'.
+	
+	
+    MCUserDefaults registerUserDefaultWithKey: pipelineFilterKey 
+        scope:0 defaultValueType:2 defaultValue:nil.
+    userDefaults := objectContext userDefaults.
+    pipelineFilter := userDefaults mutableDictionaryForKey: pipelineFilterKey.
+    
+    (pipelineFilter == nil) ifTrue: [
+        pipelineFilter := #{}.
+    ].
+
+
+	pipelineString := ''.
+	valueString := ''.
+    [ pipelineString := pipeline ] onException:[:exception| pipelineString := '' ].
+    [ valueString    := value    ] onException:[:exception| valueString    := '' ].
+	
+    pipelineFilter setValue:valueString forKey:pipelineString.
+
+	userDefaults setDictionary:pipelineFilter forKey: pipelineFilterKey.
+}}
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body width="100%">
+</body>
+</html>

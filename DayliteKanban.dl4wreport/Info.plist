@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Behavior</key>
+    <string>MCReportWebReportBehavior</string>
+    <key>DisplayName</key>
+    <string>Daylite Kanban</string>
+    <key>classTypeName</key>
+    <string>Tools</string>
+    <key>SpecVersion</key>
+    <integer>4</integer>
+    <key>UniqueURLName</key>
+    <string>pp-dl4-gtdsummary</string>
+    <key>WebReportProperties</key>
+    <dict>
+        <key>InitialAction</key>
+        <string>chart</string>
+        <key>Actions</key>
+        <dict>
+            <key>chart</key>
+            <dict>
+                <key>Filename</key>
+                <string>Main.html</string>
+            </dict>
+            <key>reorder</key>
+            <dict>
+                <key>Filename</key>
+                <string>Reorder.html</string>
+            </dict>
+            <key>setFilter</key>
+            <dict>
+                <key>Filename</key>
+                <string>SetFilter.html</string>
+            </dict>
+            <key>setDetails</key>
+            <dict>
+                <key>Filename</key>
+                <string>SetDetails.html</string>
+            </dict>
+        </dict>
+    </dict>
+</dict>
+</plist>

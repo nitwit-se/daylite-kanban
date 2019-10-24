@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+	<script type="text/javascript">
+	(function() {
+	    var script = document.createElement('script');
+	    script.setAttribute("type", "text/javascript");
+		script.setAttribute("src", window.resourcesURL + "/Main.js");
+		document.getElementsByTagName("head")[0].appendChild(script);
+		
+		$("a[rel*=leanModal]").leanModal({ top : 150, overlay : 0.5, closeButton: ".modal_close_white" });
+	
+	})();
+	</script>
+	
+</HEAD>	
+<BODY>
+
+  <div width="100%" align="left" class="footerbar"></div>
+  <div height="100%" align="left" class="leftbar"></div>
+  <div height="100%" align="left" class="rightbar"></div>
+		
+  <div style="background-color:#F0F0F0;padding: 2px; " width="100%" align="left" id="header" class="headerbar">
+	  
+	<a id='go' rel='leanModal' title='Settings' name='settings' href='#popup_settings'> 
+  	<button type="settings" onclick="" style="float:right;position:relative; right:15px; top:0px; max-height:18px; max-width:24px;"><span class="ui-icon ui-icon-gear" style="position:relative;top:-2px;left:-5px"></span></button>
+	</a>
+    <span style="float:right; padding-right:20px; font-size:12pt; font-weight:500;">
+	  	<span style="color: #A3B76D">Daylite</span> <span style="color: #9ABEDC">Kanban</span> 
+  	</span>
+	  
+	  
+  	&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <span id="debug" style="position:relative; top:1px;">  Filter:&nbsp; </span>
+
+	<select id="pipelinelist" onchange="reloadPipeline(pipelinelist.value, people.value, customer.value, keyword.value);" size="0">
+		<!--select id="pipelinelist" multiple="multiple" onchange="reloadPipeline(pipelinelist.value, people.value, month.value);" size="0"-->
+		<option value="All">All pipelines</option>
+		<optgroup id="pipelinelistOpportunities" label="Opportunities"></optgroup>	
+		<optgroup id="pipelinelistProjects" label="Projects"></optgroup>	
+	</select>
+			
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+    
+	<select id="people" onchange="reloadPipeline(pipelinelist.value, people.value, customer.value, keyword.value);" size="0" width="25">
+		<option value="Everybody">Everybody</option>
+	</select>
+	
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+   
+	<select id="customer" onchange="reloadPipeline( pipelinelist.value, people.value, customer.value, keyword.value );" size="0" width="25">
+    </select>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+
+   
+	<select id="keyword" onchange="reloadPipeline( pipelinelist.value, people.value, customer.value, keyword.value );" size="0" width="25">
+    </select>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+  	<button type="settings" onclick="reloadPipeline(pipelinelist.value, people.value, customer.value, keyword.value);" 
+		style="float:left; position:relative; top:0px; max-height:18px; max-width:24px;">
+		<span class="ui-icon ui-icon-refresh" style="position:relative;top:-1px;left:-5px;"></span>
+	</button>
+
+
+	&nbsp;&nbsp;&nbsp;&nbsp;
+
+	<input id="filter_High" name="filter_High" checked="checked" type="checkbox">High</input>
+	<input id="filter_Med"  name="filter_Med"  checked="checked" type="checkbox">Med</input>
+	<input id="filter_Low"  name="filter_Low"  checked="checked" type="checkbox">Low</input>
+  </div>
+
+
+
+  <div style="display:inline-block;padding:12px;padding-top:42px;" id="reportholder">
+	  
+  </div>
+  
+  <div id='popup_settings' class='settingsPopup'>
+	<div class='popup-header-settings'>
+		<h4 class='popup-header'><center>Settings</center></h4>
+		<a class='modal_close_white' onClick="updatePipelineFilter()" href='#'></a>
+	</div>
+	<div style="padding:15px;">
+		<H4>Opportunities:</H4>
+		<div style="padding:15px;padding-top:1px">
+			<table id='settings-pipeline-table-opp'>
+			</table>
+		</div>
+		<H4>Projects:</H4>
+		<div style="padding:15px;padding-top:1px">
+			<table id='settings-pipeline-table-proj'>
+			</table>
+		</div>
+	</div>
+  </div>
+  
+  <div id="popups">
+  </div>
+  </BODY>
+  </HTML>

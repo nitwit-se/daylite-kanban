@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+{{fscript
+
+	fieldKey := '_DB_PRIO_'.
+    pipelineFilterKey := 'com.dayban.pipelineFilter'.
+
+
+    MCUserDefaults registerUserDefaultWithKey: pipelineFilterKey
+        scope:0 defaultValueType:2 defaultValue:nil.
+    userDefaults := objectContext userDefaults.
+    pipelineFilter := userDefaults mutableDictionaryForKey: pipelineFilterKey.
+
+    (pipelineFilter == nil) ifTrue: [
+        pipelineFilter := #{}.
+    ].
+
+
+	oppKeys := { 'extra1'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra1,
+			 	 'extra2'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra2,
+			 	 'extra3'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra3,
+			 	 'extra4'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra4,
+			 	 'extra5'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra5,
+			 	 'extra6'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra6,
+			 	 'extra7'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra7,
+			 	 'extra8'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra8,
+			 	 'extra9'  -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra9,
+			 	 'extra10' -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra10,
+			 	 'extra11' -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra11,
+			 	 'extra12' -> ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') extra12 }.
+
+ 	projKeys := { 'extra1'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra1,
+ 			 	  'extra2'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra2,
+ 			 	  'extra3'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra3,
+ 			 	  'extra4'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra4,
+ 			 	  'extra5'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra5,
+ 			 	  'extra6'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra6,
+ 			 	  'extra7'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra7,
+			 	  'extra8'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra8,
+ 			 	  'extra9'  -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra9,
+ 			 	  'extra10' -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra10,
+			 	  'extra11' -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra11,
+ 			 	  'extra12' -> ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') extra12 }.
+
+
+"Need to make sure that there is a custom field set up for opps and projs"
+
+    projPrioKey := nil.
+	"First look for the key.."
+	projKeys do:[:key |
+		(key value) = fieldKey ifTrue:
+		[
+			projPrioKey := (key key).
+		].
+	].
+	projPrioKey == nil ifTrue:[
+		"Doesn't exist, we need to make it.."
+
+		"First find the first available key"
+
+		x:= 1.
+		projKeys do:[:key |
+			searchString := 'Extra Field ' ++ x stringValue.
+			(key value) = searchString ifTrue:
+			[
+				projPrioKey := (key key).
+			].
+			x := x + 1.
+		].
+	    projPrioKey = 'extra1'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra1:fieldKey ].
+	    projPrioKey = 'extra2'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra2:fieldKey ].
+	    projPrioKey = 'extra3'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra3:fieldKey ].
+	    projPrioKey = 'extra4'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra4:fieldKey ].
+	    projPrioKey = 'extra5'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra5:fieldKey ].
+	    projPrioKey = 'extra6'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra6:fieldKey ].
+	    projPrioKey = 'extra7'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra7:fieldKey ].
+	    projPrioKey = 'extra8'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra8:fieldKey ].
+	    projPrioKey = 'extra9'   ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames')  setExtra9:fieldKey ].
+	    projPrioKey = 'extra10'  ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') setExtra10:fieldKey ].
+	    projPrioKey = 'extra11'  ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') setExtra11:fieldKey ].
+	    projPrioKey = 'extra12'  ifTrue: [ ((objectContext optionsCache) valueForKey:'projectExtraFieldsNames') setExtra12:fieldKey ].
+
+	].
+
+
+
+    oppPrioKey := nil.
+	"First look for the key.."
+	oppKeys do:[:key |
+		(key value) = fieldKey ifTrue:
+		[
+			oppPrioKey := (key key).
+		].
+	].
+	oppPrioKey == nil ifTrue:[
+		"Doesn't exist, we need to make it.."
+
+		"First find the first available key"
+
+		x:= 1.
+		oppKeys do:[:key |
+			searchString := 'Extra Field ' ++ x stringValue.
+			(key value) = searchString ifTrue:
+			[
+				oppPrioKey := (key key).
+			].
+			x := x + 1.
+		].
+	    oppPrioKey = 'extra1'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra1:fieldKey ].
+	    oppPrioKey = 'extra2'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra2:fieldKey ].
+	    oppPrioKey = 'extra3'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra3:fieldKey ].
+	    oppPrioKey = 'extra4'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra4:fieldKey ].
+	    oppPrioKey = 'extra5'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra5:fieldKey ].
+	    oppPrioKey = 'extra6'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra6:fieldKey ].
+	    oppPrioKey = 'extra7'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra7:fieldKey ].
+	    oppPrioKey = 'extra8'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra8:fieldKey ].
+	    oppPrioKey = 'extra9'   ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames')  setExtra9:fieldKey ].
+	    oppPrioKey = 'extra10'  ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') setExtra10:fieldKey ].
+	    oppPrioKey = 'extra11'  ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') setExtra11:fieldKey ].
+	    oppPrioKey = 'extra12'  ifTrue: [ ((objectContext optionsCache) valueForKey:'opportunityExtraFieldsNames') setExtra12:fieldKey ].
+	].
+
+
+
+
+
+"At this point both projPrioKey and oppPrioKey point to the correct field used for prioritisations.."
+
+    getPrio := [:opp :type |
+        type = 'Opportunity' ifTrue:
+        [
+            getPrioSub value:opp value:oppPrioKey.
+        ]
+        ifFalse:
+        [
+            getPrioSub value:opp value:projPrioKey.
+        ]
+    ].
+
+	getPrioSub := [:opp :field |
+	    field = 'extra1'  ifTrue: [ opp extra1  intValue. ].
+	    field = 'extra2'  ifTrue: [ opp extra2  intValue. ].
+	    field = 'extra3'  ifTrue: [ opp extra3  intValue. ].
+	    field = 'extra4'  ifTrue: [ opp extra4  intValue. ].
+	    field = 'extra5'  ifTrue: [ opp extra5  intValue. ].
+	    field = 'extra6'  ifTrue: [ opp extra6  intValue. ].
+	    field = 'extra7'  ifTrue: [ opp extra7  intValue. ].
+	    field = 'extra8'  ifTrue: [ opp extra8  intValue. ].
+	    field = 'extra9'  ifTrue: [ opp extra9  intValue. ].
+	    field = 'extra10' ifTrue: [ opp extra10 intValue. ].
+	    field = 'extra11' ifTrue: [ opp extra11 intValue. ].
+	    field = 'extra12' ifTrue: [ opp extra12 intValue. ].
+	].
+
+    setPrio := [:opp :type :val |
+        type = 'Opportunity' ifTrue:
+        [
+            setPrioSub value:opp value:oppPrioKey value:(val stringValue).
+        ]
+        ifFalse:
+        [
+            setPrioSub value:opp value:projPrioKey value:(val stringValue).
+        ]
+    ].
+
+	setPrioSub := [:opp :field :val |
+	    field = 'extra1'  ifTrue: [ opp setExtra1: val. ].
+	    field = 'extra2'  ifTrue: [ opp setExtra2: val. ].
+	    field = 'extra3'  ifTrue: [ opp setExtra3: val. ].
+	    field = 'extra4'  ifTrue: [ opp setExtra4: val. ].
+	    field = 'extra5'  ifTrue: [ opp setExtra5: val. ].
+	    field = 'extra6'  ifTrue: [ opp setExtra6: val. ].
+	    field = 'extra7'  ifTrue: [ opp setExtra7: val. ].
+	    field = 'extra8'  ifTrue: [ opp setExtra8: val. ].
+	    field = 'extra9'  ifTrue: [ opp setExtra9: val. ].
+	    field = 'extra10' ifTrue: [ opp setExtra10: val. ].
+	    field = 'extra11' ifTrue: [ opp setExtra11: val. ].
+	    field = 'extra12' ifTrue: [ opp setExtra12: val. ].
+	].
+
+
+
+
+
+	moveTicketId := -1.
+	movePrioValue := 0.
+	moveStageName := 'Unknown'.
+	movePipelineName := 'Unknown'.
+
+    [ moveTicketId := moveTicket ] onException:[:exception| moveTicketId := -1 ].
+    [ moveTicketOpp := moveTicketType ] onException:[:exception| moveTicketOpp := 2 ].
+	[ movePrioValue := movePrio ] onException:[:exception| movePrioValue := 0].
+    [ moveStageName := moveStage ] onException:[:exception| moveStageName := 'Unknown' ].
+    [ movePipelineName := movePipeline ] onException:[:exception| movePipelineName := 'Unknown' ].
+
+	moveTicketId ~~ -1 ifTrue:
+	[
+		thepipelinedefinition := (objectContext objectsForEntityNamed:'PipelineDefinition'
+			qualifierLocum:'name == $movePipelineName'
+			bindings:#{'movePipelineName' -> (movePipelineName)}) lastObject.
+
+
+		moveOpps := objectContext objectsForEntityNamed:'Opportunity'
+        	qualifierLocum:'opportunityID == $moveTicket'
+         	bindings:#{'moveTicket' -> (moveTicketId)}.
+		moveOpp := moveOpps lastObject.
+
+
+		(moveTicketOpp = '0') ifTrue:
+		[
+			moveOpp == nil ifFalse:
+			[
+				thepipeline := objectContext createPipelineFromDefinition:thepipelinedefinition forObject:moveOpp.
+				moveOpp setLevel:movePrioValue.
+				moveOpp setCurrentPipeline:thepipeline.
+				stages := thepipeline pipelineStages.
+				doneStage := 1.
+				stages do:[:stage |
+		    		((stage name) = moveStageName) ifTrue:
+		    		[
+						(stage name) = (moveOpp currentPipelineStage name) ifFalse:
+						[
+							moveOpp setCurrentPipelineStage:stage.
+
+							" and create a stage history entry "
+							prevStageHistory := moveOpp currentPipelineStageHistory.
+
+							newStageHistory := objectContext createObjectForEntityNamed:'PipelineStageHistory' insert:true.
+							newStageHistory setPipeline:thepipeline.
+							newStageHistory setPreviousPipeline:prevStageHistory pipeline.
+
+							newStageHistory setPipelineStage:stage.
+							newStageHistory setPreviousPipelineStage:prevStageHistory pipelineStage.
+
+							prevStageHistory setEndDate: newStageHistory startDate.
+							newStageHistory setOpportunity: moveOpp.
+
+							moveOpp setCurrentPipelineStageHistory:newStageHistory.
+
+							objectContext saveChanges.
+
+						].
+
+		    		].
+				].
+			].
+		].
+
+
+		" To find out when the pipeline stage was last changed, use:"
+		"> x currentPipelineStageHistory modifyDate."
+		"{2014-06-27 09:02:02 +0000}"
+
+		moveOpps := objectContext objectsForEntityNamed:'Project'
+        	qualifierLocum:'projectID == $moveTicket'
+         	bindings:#{'moveTicket' -> (moveTicketId)}.
+		moveOpp := moveOpps lastObject.
+
+		(moveTicketOpp = '1') ifTrue:
+		[
+			moveOpp == nil ifFalse:
+			[
+				thepipeline := objectContext createPipelineFromDefinition:thepipelinedefinition forObject:moveOpp.
+				moveOpp setLevel:movePrioValue.
+				moveOpp setCurrentPipeline:thepipeline.
+				stages := thepipeline pipelineStages.
+				doneStage := 1.
+				stages do:[:stage |
+		    		((stage name) = moveStageName) ifTrue:
+		    		[
+
+						(stage name) = (moveOpp currentPipelineStage name) ifFalse:
+						[
+							moveOpp setCurrentPipelineStage:stage.
+
+							" and create a stage history entry "
+							prevStageHistory := moveOpp currentPipelineStageHistory.
+
+							newStageHistory := objectContext createObjectForEntityNamed:'PipelineStageHistory' insert:true.
+							newStageHistory setPipeline:thepipeline.
+							newStageHistory setPreviousPipeline:prevStageHistory pipeline.
+
+							newStageHistory setPipelineStage:stage.
+							newStageHistory setPreviousPipelineStage:prevStageHistory pipelineStage.
+
+							prevStageHistory setEndDate: newStageHistory startDate.
+							newStageHistory setProject: moveOpp.
+
+							moveOpp setCurrentPipelineStageHistory:newStageHistory.
+
+							objectContext saveChanges.
+
+						].
+
+
+		    		].
+				].
+			].
+		].
+
+	 "moveOpp setCurrentPipelineStage stage"
+	].
+
+
+"
+###
+
+company := objectContext objectForEntityNamed:(argument at:'Opportunity')
+    wherePrimaryKeyValueIs:(argument at:'88033').
+company setName:(argument at:'newName').
+
+objectContext saveChanges.
+
+opp := (objectContext objectsForEntityNamed:'Opportunity'
+     qualifierLocum:'name == $myname'
+     bindings:#{'myname' -> ('Test Opp')}) lastObject.
+
+stages := opp currentPipeline pipelineStages.
+doneStage := 1.
+stages  do:[:stage |
+    doneStage := (stage).
+	].
+opp setCurrentPipelineStage doneStage.
+
+###
+"
+
+"Get all users.."
+	userlist := objectContext objectsForEntityNamed:'User'
+		qualifierLocum:nil
+		bindings:nil.
+
+	users := {}.
+
+	userlist do:[:user |
+		username := (user contact) name.
+		users add:username.
+	].
+	users := users at:(users  sort).
+
+
+
+"Get all pipelines and stages.."
+
+	projpipelinelist := objectContext objectsForEntityNamed:'PipelineDefinition'
+			qualifierLocum:'active == 1 AND forProject == 1'
+			bindings:nil.
+	opppipelinelist := objectContext objectsForEntityNamed:'PipelineDefinition'
+			qualifierLocum:'active == 1 AND forOpportunity == 1'
+			bindings:nil.
+
+    projpipelines := {}.
+	opppipelines := {}.
+
+	projpipelinelist do:[:pipe |
+		stages := pipe pipelineStages.
+		stages := stages at:(stages order sort).
+		stagedict := {}.
+		stages do:[:stage |
+    	  stagedict add:(stage name).
+		].
+		dict := #{ 'name' -> (pipe name),
+				   'stages' -> stagedict }.
+		projpipelines add:dict.
+	].
+
+	opppipelinelist do:[:pipe |
+		stages := pipe pipelineStages.
+		stages := stages at:(stages order sort).
+		stagedict := {}.
+		stages do:[:stage |
+    	  stagedict add:(stage name).
+		].
+		dict := #{ 'name' -> (pipe name),
+				   'stages' -> stagedict }.
+		opppipelines add:dict.
+	].
+
+
+
+"Get all opportunities and projects"
+	opportunities := objectContext objectsForEntityNamed:'Opportunity'
+       	qualifierLocum:'opportunityStateType == 0'
+        bindings:nil.
+	projects := objectContext objectsForEntityNamed:'Project'
+		qualifierLocum:'statusCode == 0 or statusCode == 4'
+	    bindings:nil.
+
+    all := {}.
+
+    opportunities do:[:opp |
+
+		customername := ''.
+		organizations := (opp organizations).
+  	    organizations do:[:organization|
+	  	  tmpname := organization extra7.
+		  tmpname == nil ifFalse:
+		  [
+			customername := tmpname.
+		  ].
+		  customername := organization name.
+	    ].
+
+
+		p := getPrio value:opp value:'Opportunity'.
+		p == nil ifTrue:
+		[
+			"no priority, give it a default of zero..."
+			p := 0.
+			setPrio value:opp value:'Opportunity' value:p.
+		].
+
+		leveransDatum := opp extraDate1.
+  	    leveransDatum ==nil ifTrue:
+		[
+			leveransDatum := ''.
+		].
+
+      	pipeline := opp currentPipeline name.
+      	pipeline ~~ nil ifTrue:
+      	[
+      		stage := opp currentPipelineStage name.
+			prio := opp level.
+			contactname := opp assignedTo contact name.
+			contactname == nil ifTrue:
+			[
+				contactname := 'Unknown'.
+			].
+			numtasks := 0.
+		  	details := opp details.
+		  	details ==nil ifTrue:
+		  	[
+		  	 	details := ''.
+		  	].
+
+			opp tasks do:[:task |
+            	(task statusString) = 'Open' ifTrue:
+            	[
+            		numtasks := numtasks + 1.
+            	].
+            	(task statusString) = 'In Progress' ifTrue:
+            	[
+            		numtasks := numtasks + 1.
+            	].
+            	(task statusString) = 'Pending' ifTrue:
+            	[
+            		numtasks := numtasks + 1.
+            	].
+        	].
+
+
+		extra8 := (opp extra8).
+		extra8 == nil ifTrue:
+		[
+			extra8 := ''.
+		].
+
+
+	    stage == nil ifTrue:
+		[
+			stage := 'Unknown'.
+		].
+		oppId := (opp opportunityID) stringValue ++ '_o'.
+
+		keywordstr := ''.
+		opp keywords do:[:keyword |
+			keywordstr := keyword name.
+		].
+
+		details := (details stringByReplacingOccurrencesOfString:' ' withString:@'aaa').
+
+        stage ~~ nil ifTrue:
+        [
+  		  dict := #{'name' -> (opp name),
+		  			'pipeline' -> pipeline,
+					'person' -> contactname,
+					'numTasks' -> numtasks,
+					'oppId' -> oppId,
+					'state' ->  (opp opportunityStateString),
+				    'type' -> 'Opportunity',
+					'stage' -> stage,
+					'details' -> details,
+  				    'color' -> extra8,
+					'prio' -> prio,
+					'leveransDatum' -> leveransDatum,
+					'sortPrio' -> p,
+					'customer' -> customername,
+					'keyword' -> keywordstr,
+					'total' -> (opp total)}.
+      	  all add:dict.
+        ].
+      ].
+    ].
+    projects do:[:opp |
+
+	  customername := ''.
+	  organizations := (opp organizations).
+	  organizations do:[:organization|
+	  	tmpname := organization extra7.
+		tmpname == nil ifFalse:
+		[
+			customername := tmpname.
+		].
+		customername := organization name.
+	  ].
+
+      p := getPrio value:opp value:'Project'.
+  	  p == nil ifTrue:
+	  [
+		"no priority, give it a default of zero..."
+		p := 0.
+		setPrio value:opp value:'Projet' value:p.
+	  ].
+
+	  details := opp details.
+	  details ==nil ifTrue:
+	  [
+		  details := ''.
+	  ].
+	  estimatedTime := opp estimatedTime.
+	  estimatedTime ==nil ifTrue:
+	  [
+		  estimatedTime := 0.
+	  ].
+
+	  leveransDatum := opp extraDate1.
+	  leveransDatum ==nil ifTrue:
+		[
+			leveransDatum := ''.
+		].
+
+      pipeline := opp currentPipeline name.
+      pipeline ~~ nil ifTrue:
+      [
+      	stage := opp currentPipelineStage name.
+		prio := opp level.
+		contactname := opp assignedTo contact name.
+		contactname == nil ifTrue:
+		[
+			contactname := 'Unknown'.
+		].
+		stage == nil ifTrue:
+		[
+			stage := 'Unknown'.
+		].
+
+		extra8 := (opp extra8).
+		extra8 == nil ifTrue:
+		[
+			extra8 := ''.
+		].
+
+
+		extra11 := (opp extra11).
+		extra11 == nil ifTrue:
+		[
+			extra11 := '0'.
+		].
+
+		oppId := (opp projectID ) stringValue ++ '_p'.
+
+		keywordstr := ''.
+		opp keywords do:[:keyword |
+			keywordstr := keyword name.
+		].
+
+		details := (details stringByReplacingOccurrencesOfString:' ' withString:@'aaa').
+
+        stage ~~ nil ifTrue:
+        [
+			dict := #{'name' -> (opp name),
+						'pipeline' -> pipeline,
+						'person' -> contactname,
+						'oppId' -> oppId,
+						'state' -> (opp statusString),
+						'type' -> 'Project',
+						'stage' -> stage,
+						'total' -> extra11,
+						'color' -> extra8,
+						'details' -> details,
+						'prio' -> prio,
+						'sortPrio' -> p,
+						'leveransDatum' -> leveransDatum,
+						'keyword' -> keywordstr,
+						'customer' -> customername,
+						'estimatedTime' -> estimatedTime}.
+      	  all add:dict.
+        ].
+      ].
+    ].
+
+   "projpipelines := projpipelines distinct."
+   "opppipelines := opppipelines distinct."
+   all := all sortedArrayUsingDescriptors:{(NSSortDescriptor sortDescriptorWithKey:'sortPrio'
+                                                                ascending:true)}.
+
+
+
+
+   "globals setPipelineList:pipelinelist JSONRepresentation."
+   globals setAll:all JSONRepresentation.
+   globals setProjpipelines:projpipelines JSONRepresentation.
+   globals setOpppipelines:opppipelines JSONRepresentation.
+   globals setUsers:users JSONRepresentation.
+   globals setPipelinefilter:pipelineFilter JSONRepresentation.
+
+   [ globals setDefaultPerson: initialPerson ] onException:[:exception| globals setDefaultPerson: 'Everybody'].
+   [ globals setDefaultPipeline: initialPipeline ] onException:[:exception| globals setDefaultPipeline: 'All'].
+   [ globals setStartCustomer: initialCustomer ] onException:[:exception| globals setStartCustomer: 'All'].
+   [ globals setStartKeyword: initialKeyword  ] onException:[:exception| globals setStartKeyword: 'All'].
+   [ globals setDefaultFilterLow:  filterLow  ] onException:[:excetion| globals setDefaultFilterLow:  '0'].
+   [ globals setDefaultFilterMed:  filterMed  ] onException:[:excetion| globals setDefaultFilterMed:  '1'].
+   [ globals setDefaultFilterHigh: filterHigh ] onException:[:excetion| globals setDefaultFilterHigh: '1'].
+
+	globals setUsername: objectContext user username.
+
+
+  "all JSONRepresentation."
+
+}}
+<head>
+    <meta charset="utf-8">
+	<link href="{{resources}}/css/ui-lightness/jquery-ui-1.10.3.custom.css" rel="stylesheet"/>
+	<link href="{{resources}}/multiple-select.css" rel="stylesheet"/>
+	<link href="{{resources}}/Main.css" rel="stylesheet"/>
+
+
+    <script src="{{resources}}/jquery-2.0.3.js"></script>
+    <script src="{{resources}}/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="{{resources}}/accounting.js"></script>
+	<script type="text/javascript" src="{{resources}}/jquery.leanModal.min.js"></script>
+	<script type="text/javascript" src="{{resources}}/printThis.js"></script>
+
+	<script>
+	    $(function(){
+			$("#includedContent").load( encodeURI( window.resourcesURL+"/Main2.html" ) );
+	    });
+    </script>
+
+    <script type="text/javascript">
+		var opps = {{all}};
+		var projpipeline_raw_map = {{projpipelines}};
+		var opppipeline_raw_map = {{opppipelines}};
+		var users = {{users}};
+		var username = "{{username}}";
+
+		window.baseURL = "{{baseURL}}";
+		var defaultPipeline = "{{defaultPipeline}}";
+		var defaultPerson = "{{defaultPerson}}";
+		var initialCustomer = "{{startCustomer}}";
+		var initialKeyword = "{{startKeyword}}";
+		var defaultFilterLow = {{defaultFilterLow}};
+		var defaultFilterMed = {{defaultFilterMed}};
+		var defaultFilterHigh = {{defaultFilterHigh}};
+		var baseURL = "{{baseURL}}";
+		var pipelineFilter = {{pipelinefilter}};
+		window.resourcesURL = "{{resources}}";
+
+		$("a[rel*=leanModal]").leanModal({ top : 150, overlay : 0.5, closeButton: ".modal_close_white" });
+
+	</script>
+
+</head>
+
+<body>
+
+  <div id="includedContent"></div>
+
+</body>
+</html>
